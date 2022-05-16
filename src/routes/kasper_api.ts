@@ -21,13 +21,13 @@ class UserRoutes {
     res: express.Response,
     next: express.NextFunction,
   ) {
-    const seaReq = req as AppRequest;
+    const appReq = req as AppRequest;
     const userId = Number.parseInt(req.params.userId);
     assert(!Number.isNaN(userId));
     const otherUser = await orchestrator.getUserById(userId);
 
     if (otherUser) {
-      seaReq.user = otherUser;
+      appReq.user = otherUser;
       return next();
     } else {
       return res.status(404).json({
@@ -53,8 +53,8 @@ class UserRoutes {
   /// </summary>
   @catchRouteErrors
   static async deleteUser(req: express.Request, res: express.Response) {
-    const seaReq = req as AppRequest;
-    const user = seaReq.user;
+    const appReq = req as AppRequest;
+    const user = appReq.user;
 
     assert(user, 'User is not attached to the request');
 
@@ -67,8 +67,8 @@ class UserRoutes {
   /// </summary>
   @catchRouteErrors
   static async patchUser(req: express.Request, res: express.Response) {
-    const seaReq = req as AppRequest;
-    const user = seaReq.user;
+    const appReq = req as AppRequest;
+    const user = appReq.user;
 
     assert(user, 'User is not attached to the request');
 

@@ -24,12 +24,12 @@ class UserRoutes {
     ///   Method to Attach User to Request for further processing in request pipeline chain
     /// </summary>
     static async attachUser(req, res, next) {
-        const seaReq = req;
+        const appReq = req;
         const userId = Number.parseInt(req.params.userId);
         (0, assert_1.default)(!Number.isNaN(userId));
         const otherUser = await orchestrator.getUserById(userId);
         if (otherUser) {
-            seaReq.user = otherUser;
+            appReq.user = otherUser;
             return next();
         }
         else {
@@ -50,8 +50,8 @@ class UserRoutes {
     ///   Method to Delete a specific user
     /// </summary>
     static async deleteUser(req, res) {
-        const seaReq = req;
-        const user = seaReq.user;
+        const appReq = req;
+        const user = appReq.user;
         (0, assert_1.default)(user, 'User is not attached to the request');
         await orchestrator.deleteUser(user.id);
         res.status(204).json({});
@@ -60,8 +60,8 @@ class UserRoutes {
     ///   Method to Patch User's name and rank
     /// </summary>
     static async patchUser(req, res) {
-        const seaReq = req;
-        const user = seaReq.user;
+        const appReq = req;
+        const user = appReq.user;
         (0, assert_1.default)(user, 'User is not attached to the request');
         const userUpdate = new user_update_1.KasperUserUpdate(req.body, user);
         const updatedUser = await orchestrator.updateUser(userUpdate);
