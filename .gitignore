@@ -1,0 +1,3 @@
+**/node_modules
+**/kasper-backend/src/**/*.js
+*.js.map
